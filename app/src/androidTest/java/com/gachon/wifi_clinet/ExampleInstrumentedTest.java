@@ -1,4 +1,4 @@
-package com.gachon.wifi_admin;
+package com.gachon.wifi_clinet;
 
 import android.content.Context;
 

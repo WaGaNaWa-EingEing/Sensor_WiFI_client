@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/MainFragment"
-        android:name="com.gachon.wifi_admin.scanActivity"
+        android:name="com.gachon.wifi_clinet.scanActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -1,7 +1,5 @@
-package com.gachon.wifi_admin;
+package com.gachon.wifi_clinet;
 
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,11 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 public class scanActivity extends Fragment {
 

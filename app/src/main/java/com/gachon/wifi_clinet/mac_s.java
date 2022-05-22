@@ -1,6 +1,5 @@
-package com.gachon.wifi_admin;
+package com.gachon.wifi_clinet;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class mac_s {
