@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     int floor4 = 64;
     int floor2 = 39;
 
+    int floor = -1;
+
     mac_s mac_list = new mac_s();
 
     ArrayList<String> mac_find = null;
@@ -134,6 +136,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
+                    find_floor();
+
+                    results.clear();
 
                     Log.e("wifi","scanSucceed");
                 } else {
@@ -175,9 +180,58 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void find_floor(){
+        int[] score = new int[3];
+
+        for(int i=0;i<3;i++){
+            score[i] = 0;
+        }
+
+        for(int i=0;i<mac_find.size();i++){
+            int tmp = mac_list.find5Mac(mac_find.get(i));
+
+            if(tmp != -1){
+                score[0] ++;
+            }
+
+        }
+
+        for(int i=0;i<mac_find.size();i++){
+            int tmp = mac_list.find4Mac(mac_find.get(i));
+
+            if(tmp != -1){
+                score[1] ++;
+            }
+
+        }
+
+        for(int i=0;i<mac_find.size();i++){
+            int tmp = mac_list.find2Mac(mac_find.get(i));
+
+            if(tmp != -1){
+                score[2] ++;
+            }
+
+        }
+
+        int max = -1;
+
+        for(int i=0;i<3;i++){
+            if(max < score[i]){
+                max = score[i];
+                floor = i;
+            }
+        }
+
+        make_rssi_arr(floor);
+
+    }
+
     public void make_rssi_arr(int floor){
 
-        if(floor == 5){
+        if(floor == 0){
+
+            floor = 5;
 
             int[] rssi_arr = new int[floor5];
 
@@ -196,7 +250,10 @@ public class MainActivity extends AppCompatActivity {
 
             send_rssi_data(floor,rssi_arr);
 
-        }else if(floor == 4){
+        }else if(floor == 1){
+
+            floor = 4;
+
             int[] rssi_arr = new int[floor4];
 
             for(int i=0;i<floor4;i++){
@@ -215,6 +272,9 @@ public class MainActivity extends AppCompatActivity {
             send_rssi_data(floor,rssi_arr);
 
         }else if(floor == 2){
+
+            floor = 2;
+
             int[] rssi_arr = new int[floor2];
 
             for(int i=0;i<floor2;i++){
