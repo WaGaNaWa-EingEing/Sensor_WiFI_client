@@ -3,6 +3,9 @@ package com.gachon.wifi_clinet;
 import android.os.Message;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +30,7 @@ public class Http extends Thread{
         mhandler = handler;
     }
 
-    public static String httpPostBodyConnection(String UrlData, String ParamData) {
+    public static int httpPostBodyConnection(String UrlData, String ParamData) {
 
         String result = "";
         String line = null;
@@ -94,16 +97,43 @@ public class Http extends Thread{
 
         Log.d("http","data : "+result);
 
-        return result;
+        int data = -1;
+
+        if(result != null){
+            JSONObject res = null;
+            try {
+                res = new JSONObject(result);
+                String room = res.getString("Result");
+
+                data = Integer.parseInt(room.substring(1,room.length()-1));
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Log.d("http","data : "+data);
+        }
+
+        return data;
     }
 
     @Override
     public void run() {
 
-        String result = httpPostBodyConnection(mURL,body);
+        int result = httpPostBodyConnection(mURL,body);
 
-        if(result !=null){
-            Message message = mhandler.obtainMessage(101,result);
+        if(result != -1){
+
+            String respond = null;
+
+            if(result/1000 == 0){
+                respond = Integer.toString(result);
+            }else {
+                respond = Integer.toString(result).substring(0,2) + " hallway.";
+            }
+
+            Message message = mhandler.obtainMessage(101,respond);
             mhandler.sendMessage(message);
         }else{
             Message message = mhandler.obtainMessage(404,"error");
